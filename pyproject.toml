@@ -1,0 +1,50 @@
+[build-system]
+requires = ["setuptools>=61.0.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "livrel"
+version = "0.1.0"
+description = "Generate an standardized ebook"
+readme = "README.md"
+authors = [{ name = "Gauthier Chaty", email = "gauthier.chaty@gmail.com" }]
+license = { file = "LICENSE" }
+classifiers = [
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3",
+]
+keywords = ["ebook"]
+dependencies = [
+    "jsonschema"
+]
+requires-python = ">=3.9"
+
+[project.optional-dependencies]
+dev = [
+    "bumpver",
+    "pip-tools",
+    "pytest",
+    "pytest-cov",
+    "tox",
+    "build",
+    "twine"
+]
+
+[project.urls]
+Homepage = "https://github.com/bibliel/livrel"
+
+[tool.bumpver]
+current_version = "0.1.0"
+version_pattern = "MAJOR.MINOR.PATCH"
+commit_message  = "Bump version {old_version} -> {new_version}"
+commit          = true
+tag             = true
+push            = false
+
+[tool.bumpver.file_patterns]
+"pyproject.toml" = [
+    'current_version = "{version}"',
+    'version = "{version}"'
+]
+"src/package/__init__.py" = ["{version}"]
