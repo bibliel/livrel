@@ -18,17 +18,19 @@ keywords = ["ebook"]
 dependencies = [
     "jsonschema"
 ]
-requires-python = ">=3.9"
+requires-python = ">=3.10"
 
 [project.optional-dependencies]
 dev = [
+    "black",
     "bumpver",
     "pip-tools",
     "pytest",
     "pytest-cov",
     "tox",
     "build",
-    "twine"
+    "twine",
+    "flake8"
 ]
 
 [project.urls]
