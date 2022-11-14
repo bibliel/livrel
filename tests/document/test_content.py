@@ -47,3 +47,40 @@ def test_content_wrong_type():
         document.Content(text=[])
     with pytest.raises(TypeError):
         document.Content(informations=[])
+
+
+def test_content_from_dict_empty():
+    con = document.Content()
+    con.from_dict({})
+    assert con.text is None
+    assert con.informations == document.Informations()
+
+
+def test_content_from_dict_type_parameters():
+    con = document.Content()
+    with pytest.raises(TypeError):
+        con.from_dict("test")
+
+
+def test_content_from_dict_data():
+    con = document.Content()
+    con.from_dict({"text": "test", "informations": {"author": "test"}})
+    assert con.text == "test"
+    assert con.informations.author == "test"
+
+
+def test_content_from_dict_wrong_key():
+    con = document.Content()
+    con.from_dict({"text": "test", "test": "test"})
+    assert con.text == "test"
+    assert con.informations == document.Informations()
+
+    con = document.Content()
+    con.from_dict({"test": "test_k", "informations": {"year": 1}})
+    assert con.informations.year == 1
+
+
+def test_content_from_dict_wrong_type_key():
+    con = document.Content()
+    with pytest.raises(TypeError):
+        con.from_dict({"informations": {"year": "test"}})

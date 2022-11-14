@@ -3,6 +3,15 @@ import pytest
 from livrel import document
 
 
+def test_informations_exists():
+    info = document.Informations()
+
+    assert hasattr(info, "author")
+    assert hasattr(info, "source")
+    assert hasattr(info, "year")
+    assert hasattr(info, "pagination")
+
+
 def test_informations_empty():
     info = document.Informations()
 
@@ -70,3 +79,51 @@ def test_informations_wrong_type():
 
     with pytest.raises(TypeError):
         document.Informations(pagination=())
+
+
+def test_informations_from_dict_empty():
+    info = document.Informations()
+    info.from_dict({})
+    assert info.author is None
+    assert info.source is None
+    assert info.year is None
+    assert info.pagination is None
+
+
+def test_informations_from_dict_type_parameters():
+    info = document.Informations()
+    with pytest.raises(TypeError):
+        info.from_dict("test")
+
+
+def test_informations_from_dict_data():
+    info = document.Informations()
+    info.from_dict(
+        {"author": "test_a", "source": "test_s", "year": 1, "pagination": "test_p"}
+    )
+    assert info.author == "test_a"
+    assert info.source == "test_s"
+    assert info.year == 1
+    assert info.pagination == "test_p"
+
+
+def test_informations_from_dict_wrong_key():
+    info = document.Informations()
+    info.from_dict({"author": "test_a", "test": "test_v"})
+    assert info.author == "test_a"
+    assert info.source is None
+    assert info.year is None
+    assert info.pagination is None
+
+    info = document.Informations()
+    info.from_dict({"test": "test_k", "year": 1})
+    assert info.author is None
+    assert info.source is None
+    assert info.year == 1
+    assert info.pagination is None
+
+
+def test_informations_from_dict_wrong_type_key():
+    info = document.Informations()
+    with pytest.raises(TypeError):
+        info.from_dict({"year": "test"})

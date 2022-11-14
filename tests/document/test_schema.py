@@ -36,7 +36,7 @@ def test_schema_attributes_frozen():
 
 
 def test_schema_custom_ok():
-    path = importlib.resources.path("tests", "test_schema_1.json")
+    path = Path() / "tests" / "test_schema_1.json"
     sch = document.Schema(path=path)
     assert sch.data["data"] == "test"
 
